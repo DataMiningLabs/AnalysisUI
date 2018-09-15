@@ -1,19 +1,20 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import styled from 'styled-components';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import StartPage from '../pages/index';
+import Analysis from '../pages/analysis/containers/Analysis';
 import Counter from '../pages/counter/containers/CounterContainer';
+import StartPage from '../pages/startPage/containers/StartPage';
 
-const Container = styled.div`text-align: center;`;
-
-const Routes = () => (
+const App = () =>
   <Router>
     <Container>
-      <Route path="/" component={StartPage}/>
-      <Route path="/counter" component={Counter}/>
+      <Switch>
+        <Route exact path="/" component={StartPage} />
+        <Route path="/counter" component={Counter} />
+        <Route path="/analysis" component={Analysis} />
+      </Switch>
     </Container>
   </Router>
-);
+;
 
-export default Routes
+export default App;
