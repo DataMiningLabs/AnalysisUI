@@ -7,11 +7,13 @@ import StartPage from '../pages/startPage/containers/StartPage';
 
 const App = () =>
   <Router>
-    <Switch>
-      <Route exact path="/" component={StartPage} />
-      <Route path="/counter" component={Counter} />
-      <Route path="/analysis" component={Analysis} />
-    </Switch>
+    <Container>
+      <Switch>
+        <Route exact path="/" component={StartPage} />
+        <Route path="/counter" component={Counter} />
+        <Route path="/analysis" component={Analysis} />
+      </Switch>
+    </Container>
   </Router>
 ;
 
