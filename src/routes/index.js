@@ -7,13 +7,13 @@ import StartPage from '../pages/startPage/containers/StartPage';
 
 const App = () =>
   <Router>
-    <Container>
+    <div style={{textAlign: 'center'}}>
       <Switch>
         <Route exact path="/" component={StartPage} />
         <Route path="/counter" component={Counter} />
         <Route path="/analysis" component={Analysis} />
       </Switch>
-    </Container>
+    </div>
   </Router>
 ;
 
