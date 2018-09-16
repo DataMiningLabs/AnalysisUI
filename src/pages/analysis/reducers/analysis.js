@@ -5,10 +5,11 @@ import {
 } from '../constants/ActionTypes'
 
 const initialState = {
-  hamCount: 0,
+  hamCount: '-',
   hamPoints: null,
+  isChoosingMode: true,
   isFetching: true,
-  spamCount: 0,
+  spamCount: '-',
   spamPoints: null
 };
 
@@ -45,6 +46,7 @@ export const analysis = (state = initialState, action) => {
     case END_FETCHING:
       return {
         ...state,
+        isChoosingMode: false,
         isFetching: action.payload
       };
 

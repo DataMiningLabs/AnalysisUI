@@ -1,12 +1,15 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import Button from '@material-ui/core/Button';
 import BarChart from 'react-d3-components/lib/BarChart';
 
 import * as AnalysisActions from '../actions/analysis';
 import LinearIndeterminate from '../../../components/LinearIndeterminate';
+import {FILE_BIG, FILE_LITTLE} from '../constants/FileTypes';
 
 const styles = {
   chartContainer: {
@@ -22,16 +25,28 @@ const styles = {
 
 class Analysis extends React.Component {
 
-  constructor(props) {
-    super(props);
-    props.actions.setup();
-  }
+  renderChoosingMode = () =>
+    <div>
+      <Button onClick={() => this.props.actions.setup(FILE_LITTLE)}>
+        english.txt
+      </Button>
+      <Button onClick={() => this.props.actions.setup(FILE_BIG)}>
+        english_big.txt
+      </Button>
+    </div>
+  ;
 
   render() {
-    const {hamCount, hamPoints, isFetching, spamCount, spamPoints} = this.props;
+    const {hamCount, hamPoints, isChoosingMode, isFetching,
+      spamCount, spamPoints
+    } = this.props;
 
     if (spamPoints && hamPoints) {
       this.props.actions.setFetching(false);
+    }
+
+    if (isChoosingMode) {
+      return this.renderChoosingMode();
     }
 
     if (isFetching) {
@@ -78,6 +93,7 @@ Analysis.propTypes = {
   actions: PropTypes.func,
   hamCount: PropTypes.number,
   hamPoints: PropTypes.arrayOf(),
+  isChoosingMode: PropTypes.bool,
   isFetching: PropTypes.bool,
   spamCount: PropTypes.number,
   spamPoints: PropTypes.arrayOf()
@@ -86,6 +102,7 @@ Analysis.propTypes = {
 const mapStateToProps = state => ({
   hamCount: state.analysis.hamCount,
   hamPoints: state.analysis.hamPoints,
+  isChoosingMode: state.analysis.isChoosingMode,
   isFetching: state.analysis.isFetching,
   spamCount: state.analysis.spamCount,
   spamPoints: state.analysis.spamPoints,

@@ -16,6 +16,8 @@
     "DEBUG": false
   },
   "rules": {
+    "linebreak-style": "off",
+    "require-default-props": "off",
     "react/jsx-filename-extension": [
       1,
       {
