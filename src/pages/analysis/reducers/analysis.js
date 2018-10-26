@@ -1,6 +1,5 @@
 import {
   END_FETCHING,
-  SET_COUNTS,
   SET_POINTS
 } from '../constants/ActionTypes'
 
@@ -32,16 +31,11 @@ export const analysis = (state = initialState, action) => {
       return {
         ...state,
         hamPoints,
-        spamPoints
+        spamPoints,
+        spamCount: points.spamCount,
+        hamCount: points.hamCount,
       };
     }
-
-    case SET_COUNTS:
-      return {
-        ...state,
-        hamCount: action.payload && action.payload.ham,
-        spamCount: action.payload && action.payload.spam,
-      };
 
     case END_FETCHING:
       return {
