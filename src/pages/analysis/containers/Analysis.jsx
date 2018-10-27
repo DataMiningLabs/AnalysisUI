@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
 import BarChart from 'react-d3-components/lib/BarChart';
 
 import * as AnalysisActions from '../actions/analysis';
@@ -20,10 +21,36 @@ const styles = {
     display: 'flex',
     fontSize: 20,
     justifyContent: 'space-around'
+  },
+  inputContainer: {
+    alignItems: 'baseline',
+    display: 'flex',
+    justifyContent: 'center',
+    paddingBottom: 10,
+    paddingTop: 20
+  },
+  inputStyle: {
+    marginRight: 10,
+    width: 300
+  },
+  messageType(messageType) {
+    const color = messageType === 'HAM'
+      ? '#66ad27'
+      : '#c42121';
+    return ({
+      color,
+      fontSize: 30,
+      padding: 15
+    });
   }
 };
 
 class Analysis extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { errorText: '' }
+  }
 
   renderChoosingMode = () =>
     <div>
@@ -37,8 +64,9 @@ class Analysis extends React.Component {
   ;
 
   render() {
-    const {hamCount, hamPoints, isChoosingMode, isFetching,
-      spamCount, spamPoints
+    const {
+      hamCount, hamPoints, isChoosingMode, isFetching,
+      messageType, spamCount, spamPoints
     } = this.props;
 
     if (spamPoints && hamPoints) {
@@ -58,7 +86,8 @@ class Analysis extends React.Component {
 
     return (
       <div>
-        <div style={styles.chartContainer}>
+        <div>
+          <div style={styles.chartContainer}>
           <BarChart
             data={ham}
             width={600}
@@ -72,7 +101,7 @@ class Analysis extends React.Component {
             margin={{top: 10, bottom: 50, left: 50, right: 10}}
           />
         </div>
-        <div style={styles.labelContainer}>
+          <div style={styles.labelContainer}>
           <div>
             <b>Ham</b>
             <br/>
@@ -82,6 +111,36 @@ class Analysis extends React.Component {
             <b>Spam</b>
             <br/>
             Total count: {spamCount}
+          </div>
+        </div>
+        </div>
+        <div>
+          <div style={styles.inputContainer}>
+            <Input
+              id="message"
+              error={this.state.errorText.length > 0}
+              inputProps={{ 'aria-label': 'Description' }}
+              placeholder={'Type your message to check'}
+              style={styles.inputStyle}
+              width={100}
+            />
+            <Button
+              variant="outlined"
+              onClick={() => {
+                const message = document.getElementById('message').value;
+                if (message.length === 0) {
+                  this.setState({errorText: 'Input is empty!'});
+                } else {
+                  this.setState({errorText: ''});
+                  this.props.actions.analyseMessage(message);
+                }
+              }}
+            >
+              Analyse Message
+            </Button>
+          </div>
+          <div style={styles.messageType(messageType)}>
+            {messageType && messageType}
           </div>
         </div>
       </div>
@@ -95,6 +154,7 @@ Analysis.propTypes = {
   hamPoints: PropTypes.arrayOf(),
   isChoosingMode: PropTypes.bool,
   isFetching: PropTypes.bool,
+  messageType: PropTypes.string,
   spamCount: PropTypes.number,
   spamPoints: PropTypes.arrayOf()
 };
@@ -104,6 +164,7 @@ const mapStateToProps = state => ({
   hamPoints: state.analysis.hamPoints,
   isChoosingMode: state.analysis.isChoosingMode,
   isFetching: state.analysis.isFetching,
+  messageType: state.analysis.messageType,
   spamCount: state.analysis.spamCount,
   spamPoints: state.analysis.spamPoints,
 });

@@ -7,9 +7,6 @@ const StartPage = () =>
     <Button onClick={() => {window.location = '/analysis'}}>
       Analysis
     </Button>
-    <Button onClick={() => {window.location = '/counter'}}>
-      Counter
-    </Button>
   </div>
 ;
 
