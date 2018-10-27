@@ -1,6 +1,7 @@
 import {
   END_FETCHING,
-  SET_POINTS
+  SET_POINTS,
+  SET_MESSAGE_TYPE
 } from '../constants/ActionTypes'
 
 const initialState = {
@@ -8,6 +9,7 @@ const initialState = {
   hamPoints: null,
   isChoosingMode: true,
   isFetching: true,
+  messageType: null,
   spamCount: '-',
   spamPoints: null
 };
@@ -42,6 +44,12 @@ export const analysis = (state = initialState, action) => {
         ...state,
         isChoosingMode: false,
         isFetching: action.payload
+      };
+
+    case SET_MESSAGE_TYPE:
+      return{
+        ...state,
+        messageType: action.payload
       };
 
     default:
