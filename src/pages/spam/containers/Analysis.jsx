@@ -11,6 +11,8 @@ import BarChart from 'react-d3-components/lib/BarChart';
 import * as AnalysisActions from '../actions/analysis';
 import LinearIndeterminate from '../../../components/LinearIndeterminate';
 import {FILE_BIG, FILE_LITTLE} from '../constants/FileTypes';
+import HorizontalNonLinearStepper
+  from "../../../components/HorizontalNonLinearStepper";
 
 const styles = {
   chartContainer: {
@@ -19,7 +21,7 @@ const styles = {
   },
   labelContainer: {
     display: 'flex',
-    fontSize: 20,
+    fontSize: 16,
     justifyContent: 'space-around'
   },
   inputContainer: {
@@ -39,7 +41,7 @@ const styles = {
       : '#c42121';
     return ({
       color,
-      fontSize: 30,
+      fontSize: 20,
       padding: 15
     });
   }
@@ -54,6 +56,7 @@ class Analysis extends React.Component {
 
   renderChoosingMode = () =>
     <div>
+      <HorizontalNonLinearStepper step={1}/>
       <Button onClick={() => this.props.actions.setup(FILE_LITTLE)}>
         english.txt
       </Button>
@@ -86,18 +89,19 @@ class Analysis extends React.Component {
 
     return (
       <div>
+        <HorizontalNonLinearStepper step={1}/>
         <div>
           <div style={styles.chartContainer}>
           <BarChart
             data={ham}
-            width={600}
-            height={400}
+            width={550}
+            height={320}
             margin={{top: 10, bottom: 50, left: 50, right: 10}}
           />
           <BarChart
             data={spam}
-            width={600}
-            height={400}
+            width={550}
+            height={320}
             margin={{top: 10, bottom: 50, left: 50, right: 10}}
           />
         </div>
